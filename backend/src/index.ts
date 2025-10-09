@@ -121,8 +121,25 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// Serverless function handler
+// Serverless function handler for Vercel
 export default async (req: any, res: any) => {
-  await connectToDatabase();
-  return app(req, res);
+  try {
+    await connectToDatabase();
+    
+    // Set CORS headers manually for Vercel
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Temporarily allow all origins
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization');
+    
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
+    }
+    
+    return app(req, res);
+  } catch (error) {
+    console.error('Serverless function error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
