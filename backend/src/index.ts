@@ -18,28 +18,38 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false,
 }));
 
-// CORS configuration
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://secure-vault-lemon.vercel.app',
-  process.env.FRONTEND_URL
-].filter(Boolean);
+// Debug logging
+console.log('Environment variables:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
+// Simplified CORS configuration for debugging
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+    console.log('CORS request from origin:', origin);
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // For debugging - temporarily allow all origins
+    callback(null, true);
+    
+    // Uncomment below for production security
+    /*
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'https://secure-vault-lemon.vercel.app',
+      process.env.FRONTEND_URL
+    ].filter(Boolean);
+    
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       console.log('CORS blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
+    */
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 // Rate limiting
@@ -63,7 +73,24 @@ app.use('/api/vault', vaultRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  res.json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      FRONTEND_URL: process.env.FRONTEND_URL,
+      hasMongoUri: !!process.env.MONGODB_URI
+    }
+  });
+});
+
+// CORS test endpoint
+app.get('/api/cors-test', (req, res) => {
+  res.json({ 
+    message: 'CORS test successful',
+    origin: req.headers.origin,
+    timestamp: new Date().toISOString()
+  });
 });
 
 // MongoDB connection for serverless
