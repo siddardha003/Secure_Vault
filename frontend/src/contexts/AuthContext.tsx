@@ -16,8 +16,6 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  masterPassword: string | null;
-  setMasterPassword: (password: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,29 +35,38 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [masterPassword, setMasterPasswordState] = useState<string | null>(null);
 
   const isAuthenticated = !!user;
 
   // Check for existing session on mount
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('authToken');
-      const savedUser = localStorage.getItem('user');
-      
-      if (token && savedUser) {
-        try {
-          // Verify token with server
-          await authAPI.verify();
-          setUser(JSON.parse(savedUser));
-        } catch (error) {
-          console.error('Token verification failed:', error);
-          // Clear invalid session
-          localStorage.removeItem('authToken');
-          localStorage.removeItem('user');
+      try {
+        const token = localStorage.getItem('authToken');
+        const savedUser = localStorage.getItem('user');
+        
+        if (token && savedUser) {
+          try {
+            // Verify token with server
+            await authAPI.verify();
+            setUser(JSON.parse(savedUser));
+          } catch (error) {
+            console.error('Token verification failed:', error);
+            // Clear invalid session
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            setUser(null);
+          }
         }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        // Clear any potentially corrupted data
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        setUser(null);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     checkAuth();
@@ -74,15 +81,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem('authToken', token);
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
-      setMasterPasswordState(password);
       
-      // Initialize encryption if not already done
-      try {
-        initializeEncryption(userData.id);
-      } catch {
-        // Salt might already exist, that's okay
-        console.log('Encryption already initialized');
-      }
+      // Initialize simple encryption for user
+      initializeEncryption(userData.id);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Login failed';
       throw new Error(errorMessage);
@@ -98,9 +99,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem('authToken', token);
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
-      setMasterPasswordState(password);
       
-      // Initialize encryption for new user
+      // Initialize simple encryption for new user
       initializeEncryption(userData.id);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Registration failed';
@@ -119,11 +119,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
     
     setUser(null);
-    setMasterPasswordState(null);
-  };
-
-  const setMasterPassword = (password: string) => {
-    setMasterPasswordState(password);
   };
 
   const value: AuthContextType = {
@@ -133,8 +128,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     login,
     register,
     logout,
-    masterPassword,
-    setMasterPassword,
   };
 
   return (

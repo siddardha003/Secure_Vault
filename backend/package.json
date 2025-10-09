@@ -9,7 +9,11 @@
     "dev": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["password-manager", "vault", "security"],
+  "keywords": [
+    "password-manager",
+    "vault",
+    "security"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
