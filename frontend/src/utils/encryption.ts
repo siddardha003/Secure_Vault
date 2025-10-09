@@ -20,11 +20,15 @@ export interface EncryptedVaultItem {
 }
 
 // Placeholder functions - encryption disabled for simplicity
-export function initializeEncryption(userId: string): void {}
-export function clearEncryptionData(userId: string): void {}
-export function resetEncryptionData(userId: string): void {}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function initializeEncryption(_userId: string): void {}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function clearEncryptionData(_userId: string): void {}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function resetEncryptionData(_userId: string): void {}
 
-export function encryptVaultItem(item: VaultItemData, userId: string): Omit<EncryptedVaultItem, '_id' | 'userId' | 'createdAt' | 'updatedAt'> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function encryptVaultItem(item: VaultItemData, _userId: string): Omit<EncryptedVaultItem, '_id' | 'userId' | 'createdAt' | 'updatedAt'> {
   // No encryption - just pass through the data
   return {
     encryptedTitle: item.title,
@@ -35,7 +39,8 @@ export function encryptVaultItem(item: VaultItemData, userId: string): Omit<Encr
   };
 }
 
-export function decryptVaultItem(item: EncryptedVaultItem, userId: string): VaultItemData {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function decryptVaultItem(item: EncryptedVaultItem, _userId: string): VaultItemData {
   // No decryption - just pass through the data
   return {
     title: item.encryptedTitle,

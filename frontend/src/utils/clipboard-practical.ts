@@ -29,7 +29,7 @@ export async function copyWithSmartClear(
   try {
     await navigator.clipboard.writeText(text);
     onCopySuccess?.();
-  } catch (error) {
+  } catch {
     // Fallback for older browsers
     const textArea = document.createElement('textarea');
     textArea.value = text;

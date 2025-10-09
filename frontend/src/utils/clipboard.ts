@@ -22,7 +22,7 @@ class SmartClipboard implements ClipboardManager {
       await navigator.clipboard.writeText(text);
       this.lastCopiedText = text;
       this.scheduleAutoClear();
-    } catch (error) {
+    } catch {
       // Fallback for older browsers or security restrictions
       const textArea = document.createElement('textarea');
       textArea.value = text;

@@ -81,7 +81,7 @@ const PasswordGenerator: React.FC<PasswordGeneratorProps> = ({ onPasswordGenerat
   // Generate initial password
   React.useEffect(() => {
     generatePassword();
-  }, []);
+  }, [generatePassword]);
 
   return (
     <div className="bg-[var(--background)] border border-[var(--border)] rounded-lg p-6">

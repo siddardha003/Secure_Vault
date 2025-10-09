@@ -25,7 +25,7 @@ export async function copyWithAutoClear(
   // First, copy the text
   try {
     await navigator.clipboard.writeText(text);
-  } catch (error) {
+  } catch {
     // Fallback for older browsers
     const textArea = document.createElement('textarea');
     textArea.value = text;
@@ -63,7 +63,7 @@ function scheduleClipboardClear(
     try {
       await attemptClear(originalText);
       onSuccess?.();
-    } catch (error) {
+    } catch {
       // Strategy 2: Set up visibility change listener for when user returns
       setupVisibilityBasedClear(originalText, onSuccess, onFailed);
     }

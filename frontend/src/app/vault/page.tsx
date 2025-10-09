@@ -5,11 +5,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { vaultAPI } from '@/utils/api';
 import PasswordGenerator from '@/components/PasswordGenerator';
-import VaultItem from '@/components/VaultItem';
 import VaultForm, { VaultItemData } from '@/components/VaultForm';
 import ThemeToggle from '@/components/ThemeToggle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder, faFolderOpen, faCopy, faExternalLinkAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faFolderOpen, faCopy, faExternalLinkAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { 
   Search, 
   Plus, 
@@ -222,76 +221,6 @@ const VaultPage: React.FC = () => {
   const handleFolderClick = (item: DecryptedVaultItem, event: React.MouseEvent) => {
     event.stopPropagation();
     handleEditItem(item.id);
-  };
-
-
-
-  const handleClearCorruptedData = async () => {
-    if (!confirm('This will permanently delete all vault items. This action cannot be undone. Continue?')) {
-      return;
-    }
-    
-    try {
-      setIsLoading(true);
-      const encryptedItems = await vaultAPI.getItems();
-      
-      // Delete all items
-      for (const item of encryptedItems) {
-        await vaultAPI.deleteItem(item._id);
-      }
-      
-      // Reload the vault
-      await loadVaultItems();
-    } catch (error) {
-      console.error('Failed to clear data:', error);
-      setError('Failed to clear data');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDeleteAll = async () => {
-    try {
-      setIsLoading(true);
-      
-      // Delete all existing items
-      const encryptedItems = await vaultAPI.getItems();
-      for (const item of encryptedItems) {
-        await vaultAPI.deleteItem(item._id);
-      }
-      
-      // Reload the vault (should be empty now)
-      await loadVaultItems();
-      setError('All items deleted successfully.');
-      
-      // Clear success message after 5 seconds
-      setTimeout(() => setError(''), 5000);
-      
-    } catch (error) {
-      console.error('Failed to delete all and reset:', error);
-      setError('Failed to delete all items');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleQuickFix = async () => {
-    try {
-      setIsLoading(true);
-      
-      // Just reload the vault - no complex fixing needed
-      await loadVaultItems();
-      setError('Vault refreshed successfully.');
-      
-      // Clear success message after 3 seconds
-      setTimeout(() => setError(''), 3000);
-      
-    } catch (error) {
-      console.error('Failed to refresh vault:', error);
-      setError('Failed to refresh vault');
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const handleLogout = () => {
