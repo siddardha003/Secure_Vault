@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Secure Vault - Password Manager",
   description: "A secure, privacy-first password manager with client-side encryption",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

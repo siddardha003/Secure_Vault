@@ -2,8 +2,8 @@
 
 
 
-Your Digital Vault, Secured Forever - A privacy-first password manager with client-side encryption
-
+Your Digital Vault, Secured Forever - A privacy-first password manager with client-side encryption!!
+Secure Vault is a modern, privacy-first password manager to provide users with a secure and intuitive way to manage their digital credentials. Secure Vault is designed as a zero-knowledge password manager that prioritizes user privacy and data security.
 
 
 ## What I used for crypto and why?
@@ -69,41 +69,6 @@ Visit `http://localhost:3000` to access the application.
 - **🎨 Dark Mode**: Theme toggle for comfortable viewing.
 
 
-
-## 📁 Project Structure
-
-```
-Secure_Vault/
-├── backend/                 # Node.js + Express API
-│   ├── src/
-│   │   ├── models/         # MongoDB models (User, VaultItem)
-│   │   ├── routes/         # API routes (auth, vault)
-│   │   ├── middleware/     # Authentication middleware
-│   │   └── index.ts        # Server entry point
-│   ├── .env                # Environment variables
-│   └── package.json
-│
-├── frontend/               # Next.js React application
-│   ├── src/
-│   │   ├── app/           # Next.js app directory
-│   │   │   ├── login/     # Login page
-│   │   │   ├── register/  # Registration page
-│   │   │   └── vault/     # Main vault page
-│   │   ├── components/    # React components
-│   │   │   ├── PasswordGenerator.tsx
-│   │   │   ├── VaultItem.tsx
-│   │   │   └── VaultForm.tsx
-│   │   ├── contexts/      # React contexts
-│   │   │   └── AuthContext.tsx
-│   │   └── utils/         # Utilities
-│   │       ├── encryption.ts  # Client-side encryption
-│   │       └── api.ts         # API client
-│   ├── .env.local         # Environment variables
-│   └── package.json
-│
-└── README.md
-```
-
 ## 🔧 Environment Variables
 
 ### Backend (.env)
@@ -129,10 +94,3 @@ NEXT_PUBLIC_API_URL=http://localhost:5000/api
 - **Database**: MongoDB with Mongoose
 - **Encryption**: crypto-js (AES-256 + PBKDF2)
 - **Authentication**: JWT tokens
-
-### Code Quality
-- TypeScript for type safety
-- ESLint for code linting
-- Proper error handling throughout
-- Client-side validation
-- Secure coding practices

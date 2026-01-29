@@ -1,9 +1,10 @@
 ﻿'use client';
 
 import React from 'react';
-import { Lock, BrickWallShield, Shield, Key, Eye } from 'lucide-react';
+import { Shield, Key, Eye } from 'lucide-react';
 import Link from 'next/link';
 import ThemeToggle from '@/components/ThemeToggle';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -12,9 +13,15 @@ export default function Home() {
       <header className="border-b border-[var(--border)] bg-[var(--background)] flex-shrink-0">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-lg bg-[var(--foreground)] flex items-center justify-center">
-                <Lock className="h-4 w-4 text-[var(--background)]" />
+            <div className="flex items-center">
+              <div className="w-14 h-14 mt-1 rounded-lg flex items-center justify-center">
+                <Image 
+                src="/Secure-vault.svg" 
+                alt="Secure Vault Shield" 
+                width={80} 
+                height={80} 
+                className="text-[var(--foreground)]"
+              />
               </div>
               <h1 className="text-lg font-semibold text-[var(--foreground)] tracking-tight">Secure Vault</h1>
             </div>
@@ -44,12 +51,18 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-16 items-center">
             {/* Left Side - Shield Icon */}
             <div className="flex items-center justify-center">
-              <BrickWallShield className="h-96 w-96 text-[var(--foreground)]" strokeWidth={1.2} />
+              <Image 
+                src="/Secure-vault.svg" 
+                alt="Secure Vault Shield" 
+                width={640} 
+                height={640} 
+                className="text-[var(--foreground)]"
+              />
             </div>
 
             {/* Right Side - Content */}
             <div className="flex flex-col justify-center">
-              <div className="mb-8">
+              <div className="mt-8">
                 <h1 className="text-5xl font-bold text-[var(--foreground)] mb-2 tracking-tight leading-tight">
                   Your Digital Vault,
                 </h1>
