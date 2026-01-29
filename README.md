@@ -2,8 +2,8 @@
 
 
 
-Your Digital Vault, Secured Forever - A privacy-first password manager with client-side encryption!!
-Secure Vault is a modern, privacy-first password manager to provide users with a secure and intuitive way to manage their digital credentials. Secure Vault is designed as a zero-knowledge password manager that prioritizes user privacy and data security.
+<b>Your Digital Vault, Secured Forever - A privacy-first password manager with client-side encryption!!<br/>
+Secure Vault is a modern, privacy-first password manager to provide users with a secure and intuitive way to manage their digital credentials.</b>
 
 
 ## What I used for crypto and why?
@@ -21,7 +21,6 @@ I Have Used "Crypto-js library" for client-side AES-256-CBC encryption ensuring 
 ```bash
 
 git clone https://github.com/siddardha003/Secure_Vault.git
-
 cd Secure_Vault
 
 ```
@@ -29,11 +28,13 @@ cd Secure_Vault
 ### Backend setup
 
 ```bash
-
+# Navigate to the directory
 cd backend
 
+# Install dependencies
 npm install
 
+# Start development server
 npm run dev
 
 ```
@@ -41,11 +42,13 @@ npm run dev
 ### Frontend setup
 
 ```bash
-
+# Navigate to the directory
 cd ../frontend
 
+# Install dependencies
 npm install
 
+# Start development server
 npm run dev
 
 ``````
